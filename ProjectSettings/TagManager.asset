@@ -12,7 +12,7 @@ TagManager:
   Builtin Layer 5: 
   Builtin Layer 6: 
   Builtin Layer 7: 
-  User Layer 8: 
+  User Layer 8: Ground
   User Layer 9: 
   User Layer 10: 
   User Layer 11: 
@@ -40,4 +40,16 @@ TagManager:
   - name: Default
     userID: 0
     uniqueID: 0
+    locked: 0
+  - name: Background
+    userID: 2
+    uniqueID: 1859160353
+    locked: 0
+  - name: Level Elements
+    userID: 1
+    uniqueID: 1232793579
+    locked: 0
+  - name: Player
+    userID: 3
+    uniqueID: 1123847421
     locked: 0

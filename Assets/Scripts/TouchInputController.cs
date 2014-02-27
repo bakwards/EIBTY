@@ -25,8 +25,11 @@ public class TouchInputController : MonoBehaviour {
 		if (e.State == Gesture.GestureState.Recognized)
 		{
 			FlickGesture gesture = sender as FlickGesture;
-			playerController.SwitchDirection((int)Mathf.Sign(gesture.ScreenFlickVector.x));
-			playerController.Boost();
+			if(Mathf.Abs(gesture.ScreenFlickVector.x) > Mathf.Abs(gesture.ScreenFlickVector.y)){
+				playerController.SwitchDirection((int)Mathf.Sign(gesture.ScreenFlickVector.x));
+			} else if (gesture.ScreenFlickVector.y > 0){
+				playerController.Jump();
+			}
 		} 
 		
 	}

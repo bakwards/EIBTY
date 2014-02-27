@@ -17,11 +17,9 @@ public class KeyboardInputController : MonoBehaviour {
 		}
 		if(Input.GetKeyDown(KeyCode.LeftArrow)){
 			playerController.SwitchDirection(-1);
-			playerController.Boost();
 		}
 		if(Input.GetKeyDown(KeyCode.RightArrow)){
 			playerController.SwitchDirection(1);
-			playerController.Boost();
 		}
 	}
 }

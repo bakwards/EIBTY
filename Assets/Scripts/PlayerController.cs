@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour {
 	private float boostCoolDownCounter = 0;
 	private int direction = 1;
 	private bool isBoosting = false;
+	private bool airJumpAllowed = true;
+	private bool grounded = true;
+	public GameObject groundCheck;
 
 	void Start (){
 		transform.localScale = new Vector3(direction, 1, 1);
@@ -23,6 +26,8 @@ public class PlayerController : MonoBehaviour {
 			isBoosting = false;
 			rigidbody2D.gravityScale = 1;
 		}
+		grounded = Physics2D.Linecast(transform.position, groundCheck.transform.position, 1 << LayerMask.NameToLayer("Ground"));
+		if(grounded) { airJumpAllowed = true; }
 	}
 
 	void Update () {
@@ -34,11 +39,17 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void Jump () {
-		rigidbody2D.AddForce(transform.up * jumpPower);
+		if(grounded){
+			rigidbody2D.AddForce(transform.up * jumpPower);
+		} else if (airJumpAllowed) {
+			airJumpAllowed = false;
+			rigidbody2D.AddForce(transform.up * jumpPower);
+		}
 	}
 
 	public void Boost () {
 		if(!isBoosting && boostCoolDownCounter == 0){
+			rigidbody2D.velocity = new Vector2( rigidbody2D.velocity.x, 0);
 			rigidbody2D.AddForce(transform.right * swipeBoostPower * direction);
 			rigidbody2D.gravityScale = 0;
 			boostCoolDownCounter = boostCoolDown;
@@ -48,11 +59,15 @@ public class PlayerController : MonoBehaviour {
 	
 	public void SwitchDirection (int dir) {
 		if(dir == direction){
-			return;
+			Boost ();
 		} else {
 			direction *= -1;
 			transform.localScale = new Vector3(direction, 1, 1);
 		}
+	}
+
+	private bool GroundCheck(){
+		return true;
 	}
 
 }
